@@ -22,6 +22,7 @@
                 }
             },
 
+            //function to verify browser compability and create
             created: function () {
                 var speech = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (speech !== undefined) {
@@ -31,6 +32,7 @@
                 }
             },
 
+            //function to set some parameters and add event listeners
             ready: function () {
                 this.recognition.continuous = true;
                 this.recognition.interimResults = false;
@@ -57,14 +59,17 @@
                 });
             },
 
+            //observer for language
             _languageChanged: function () {
                 this.recognition.lang = this.language;
             },
 
+            //function to start recognition
             start: function () {
                 this.recognition.start();
             },
 
+            //function to stop recognition
             stop: function () {
                 this.recognition.stop();
             }

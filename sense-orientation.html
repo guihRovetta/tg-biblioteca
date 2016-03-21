@@ -46,7 +46,7 @@
                 this.alpha = newValue;
             },
 
-            //function to get actual position
+            //function to get device orientation
             getOrientation: function () {
                 if (window.DeviceOrientationEvent) {
                     window.addEventListener('deviceorientation', this._onShow.bind(this), false);

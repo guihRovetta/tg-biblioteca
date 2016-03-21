@@ -24,6 +24,7 @@
                 }
             },
 
+            //function to verify browser compability and create
             created: function () {
                 if ('speechSynthesis' in window) {
                     this.synthesis = new SpeechSynthesisUtterance();
@@ -32,6 +33,7 @@
                 }
             },
 
+            //function to initialize observers and add event listeners
             ready: function () {
                 this._languageChanged();
                 this._textChanged();
@@ -50,6 +52,7 @@
                 });
             },
 
+            //observers for language and text
             _languageChanged: function () {
                 this.synthesis.lang = this.language;
             },
@@ -58,10 +61,12 @@
                 this.synthesis.text = this.text;
             },
 
+            //function to start speak
             speak: function () {
                 window.speechSynthesis.speak(this.synthesis);
             },
 
+            //function to stop speak
             cancel: function () {
                 window.speechSynthesis.cancel();
             }
