@@ -1,0 +1,79 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="sense-orientation">
+    <style></style>
+
+    <template></template>
+
+    <script>
+        // element registration
+        Polymer({
+            is: "sense-orientation",
+            properties: {
+                gamma: {
+                    type: Number,
+                    notify: true,
+                    observer: '_gammaChanged',
+                    reflectToAttribute: true,
+                    value: 0
+                },
+                beta: {
+                    type: Number,
+                    notify: true,
+                    observer: '_betaChanged',
+                    reflectToAttribute: true,
+                    value: 0
+                },
+                alpha: {
+                    type: Number,
+                    notify: true,
+                    observer: '_alphaChanged',
+                    reflectToAttribute: true,
+                    value: 0
+                }
+            },
+
+            //observers for gamma, beta and alpha
+            _gammaChanged: function (newValue, oldValue) {
+                this.gamma = newValue;
+            },
+
+            _betaChanged: function (newValue, oldValue) {
+                this.beta = newValue;
+            },
+
+            _alphaChanged: function (newValue, oldValue) {
+                this.alpha = newValue;
+            },
+
+            //function to get actual position
+            getOrientation: function () {
+                if (window.DeviceOrientationEvent) {
+                    window.addEventListener('deviceorientation', this._onShow.bind(this), false);
+                } else {
+                    console.log("O seu browser não possui esse recurso");
+                }
+            },
+
+            //function success
+            _onShow: function (event) {
+                this.gamma = event.gamma;
+                this.beta = event.beta;
+                this.alpha = event.alpha;
+
+                this.fire('motion', {
+                    gamma: this.gamma,
+                    beta: this.beta,
+                    alpha: this.alpha
+                });
+            },
+
+            //function failed
+            _onError: function (err) {
+                this.fire('Error for debug - ', {
+                    error: err.code + ' : ' + err.message
+                });
+            }
+        });
+    </script>
+</dom-module>
